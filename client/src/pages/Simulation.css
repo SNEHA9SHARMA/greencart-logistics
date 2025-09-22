@@ -1,0 +1,35 @@
+.simulation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.simulation.children{
+    margin-bottom: 2px;
+}
+.simulation input{
+    margin-bottom: 10px;
+}
+.simulation button{
+    background-color: blueviolet;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-shadow: 4px 4px 10px 2px grey;
+    border-color: blueviolet;
+
+}
+.simulation button:hover{
+    cursor: pointer;
+    background-color: rgb(196, 67, 236);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 4px 4px 10px 2px grey;
+
+}
+.simulation-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
