@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
 import dashboardRouter from "./routes/dashboard.js";
 // Import routes
 import driversRouter from "./routes/drivers.js";
@@ -14,6 +15,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Backend API is running ✅");
+});
 
 // API routes
 app.use("/drivers", driversRouter);
