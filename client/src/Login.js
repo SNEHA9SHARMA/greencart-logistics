@@ -7,7 +7,7 @@ export default function Login({ setToken }) {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/auth/login", { username, password });
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, { username, password });
       setToken(res.data.token);
       localStorage.setItem("token", res.data.token);
     } catch(err) {

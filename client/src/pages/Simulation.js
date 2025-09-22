@@ -12,7 +12,7 @@ const Simulation = () => {
   const runSimulation = async () => {
     setError("");
     try {
-      const res = await axios.post("http://localhost:5000/simulation", {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/simulation`, {
         numDrivers,
         routeStartTime,
         maxHoursPerDriver: maxHours

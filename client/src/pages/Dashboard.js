@@ -8,7 +8,7 @@ const Dashboard = ({ token }) => {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/dashboard/latest", {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard/latest`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setData(res.data);
