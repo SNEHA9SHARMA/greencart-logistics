@@ -56,7 +56,7 @@ router.put("/:id", async (req, res) => {
     const result = await pool.query(
       `UPDATE drivers 
        SET value_rs = $1, route_id = $2, delivery_time = $3
-       WHERE order_id = $4
+       WHERE id = $4
        RETURNING *`,
       [value_rs, route_id, delivery_time, id]
     );
@@ -76,7 +76,7 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params; // order_id to delete
 
     const result = await pool.query(
-      `DELETE FROM drivers WHERE order_id = $1 RETURNING *`,
+      `DELETE FROM drivers WHERE id = $1 RETURNING *`,
       [id]
     );
 
