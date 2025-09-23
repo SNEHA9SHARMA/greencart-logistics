@@ -20,7 +20,9 @@ export const fetchRoutes = () => API.get("/routes");
 
 //   ==========Orders CRUD endpoints==========  
 export const fetchOrders = () => API.get("/orders");
-
+export const addOrder = (order) => API.post("/orders/add", order);
+export const updateOrder = (id, order) => API.put(`/orders/${id}`, order);
+export const deleteOrder = (id) => API.delete(`/orders/${id}`);
 
 export const runSimulation = () => API.post("/simulation/run");
 

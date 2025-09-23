@@ -205,7 +205,7 @@ const DriversManagement = () => {
   };
 
   return (
-    <div className="DriversManagement">
+    <div className="Management">
       <h2>Manage Drivers</h2>
 
       {/* Show menu if active = menu */}

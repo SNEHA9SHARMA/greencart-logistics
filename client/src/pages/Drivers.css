@@ -1,4 +1,4 @@
-.DriversManagement{
+.Management{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +18,7 @@ h2{
     align-items: center;
     justify-content: center;
 }
-.Update-Driver-Page{
+.managePage{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +28,7 @@ input{
     width:200px;
     margin-bottom: 20px;
 }
-.DriversManagement button{
+.Management button{
     height:30px;
     width: 90px;
     background-color: #1e3a8a;
@@ -38,13 +38,13 @@ input{
     border-color: transparent;
     box-shadow: 4px 4px 10px 2px grey;
 }
-.DriversManagement button:hover{
+.Management button:hover{
    
     background-color: #27428e;
     cursor: pointer;
     box-shadow: 4px 4px 7px 1px grey;
 }
-.DriversManagement button:active{
+.Management button:active{
    
     background-color: #44278e;
     cursor: pointer;
