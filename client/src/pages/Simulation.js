@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import "./Simulation.css";
 const Simulation = () => {
   const [numDrivers, setNumDrivers] = useState(5);
@@ -68,6 +68,8 @@ const Simulation = () => {
               <Cell fill="#4caf50" />
               <Cell fill="#f44336" />
             </Pie>
+            <Tooltip />
+            <Legend />
           </PieChart>
 
           <h3>Fuel Cost Breakdown</h3>
@@ -86,6 +88,8 @@ const Simulation = () => {
               <Cell fill="#2196f3" />
               <Cell fill="#ff9800" />
             </Pie>
+            <Tooltip />
+            <Legend />
           </PieChart>
 
           <h3>Driver Allocations</h3>

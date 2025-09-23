@@ -37,6 +37,41 @@ driversRouter.post("/add", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+driversRouter.put("/:id",async(req,res)=>{
+  try{
+    const {id}=req.params;
+    const {name,shift_hours,past_week_hours}=req.body;
+    const result=await pool.query(
+      `UPDATE drivers SET name=$1, shift_hours=$2, week_hours=$3 WHERE id = $4 
+       RETURNING *`,
+      [name, shift_hours, past_week_hours, id])
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Driver not found" });
+    }
+    res.json({ message: "Driver updated", driver: result.rows[0] });
+  }catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+driversRouter.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const result = await pool.query(
+      "DELETE FROM drivers WHERE id = $1 RETURNING *",
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Driver not found" });
+    }
+
+    res.json({ message: "Driver deleted successfully", driver: result.rows[0] });
+  } catch (err) {
+    console.error("Error deleting driver:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 export default driversRouter;
 

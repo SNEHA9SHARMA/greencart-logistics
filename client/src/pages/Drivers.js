@@ -1,6 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { fetchDrivers,addDriver } from '../api/api';
+import { fetchDrivers,addDriver,updateDriver,deleteDriver } from '../api/api';
 import "./Drivers.css"
+
+//======================CREATE====================================
+const AddDrivers = () => {
+const [newDriver, setNewDriver] = useState({
+    name: "",
+    shift_hours: "",
+    past_week_hours: "",
+  });
+ const handleCreateDriver = async () => {
+    try {
+      const res = await addDriver(newDriver);
+      setNewDriver({ name: "", shift_hours: "", past_week_hours: "" }); // reset form
+    } catch (err) {
+      console.error("Failed to create driver:", err);
+    }
+  };
+  return (
+   
+   <div className="Create-Driver-Page" style={{ marginBottom: "1rem" }}>
+    <h3>Add New Driver</h3>
+        <input
+          type="text"
+          placeholder="Name"
+          value={newDriver.name}
+          onChange={(e) => setNewDriver({ ...newDriver, name: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Shift Hours"
+          value={newDriver.shift_hours}
+          onChange={(e) =>
+            setNewDriver({ ...newDriver, shift_hours: e.target.value })
+          }
+        />
+        <input
+          type="text"
+          placeholder="Past Week Hours (e.g. 6|7|8|6|7|8|9)"
+          value={newDriver.past_week_hours}
+          onChange={(e) =>
+            setNewDriver({ ...newDriver, past_week_hours: e.target.value })
+          }
+        />
+        <button onClick={handleCreateDriver}>Add</button>
+      </div>
+  );
+};
+
+//========================READ======================================
 const ReadDrivers = () => {
   const [drivers, setDrivers] = useState([]);
 
@@ -20,8 +68,8 @@ const ReadDrivers = () => {
   }, []);
 
   return (
-    <div className="drivers">
-      <h2>Drivers</h2>
+    <div className="Read-Driver-Page">
+      <h3>Drivers</h3>
       <table border="1" cellPadding="5" cellSpacing="0">
   <thead>
     <tr>
@@ -46,62 +94,145 @@ const ReadDrivers = () => {
     </div>
   );
 };
-const AddDrivers = () => {
-const [newDriver, setNewDriver] = useState({
-    name: "",
-    shift_hours: "",
-    past_week_hours: "",
+
+//========================UPDATE======================================
+const UpdateDrivers=()=>{
+  const [driverId, setDriverId] = useState("");
+  const [updatedDriver,setUpdatedDriver]=useState({
+    name:"", shift_hours:"",past_week_hours:"",
   });
- const handleCreateDriver = async () => {
-    try {
-      const res = await addDriver(newDriver);
-      setNewDriver({ name: "", shift_hours: "", past_week_hours: "" }); // reset form
-    } catch (err) {
-      console.error("Failed to create driver:", err);
-    }
-  };
-  return (
-   
-   <div style={{ marginBottom: "1rem" }}>
-    <h2>Add New Driver</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={newDriver.name}
-          onChange={(e) => setNewDriver({ ...newDriver, name: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Shift Hours"
-          value={newDriver.shift_hours}
-          onChange={(e) =>
-            setNewDriver({ ...newDriver, shift_hours: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Past Week Hours (e.g. 6|7|8|6|7|8|9)"
-          value={newDriver.past_week_hours}
-          onChange={(e) =>
-            setNewDriver({ ...newDriver, past_week_hours: e.target.value })
-          }
-        />
-        <button onClick={handleCreateDriver}>Add Driver</button>
-      </div>
+ const handleUpdateDriver = async () => {
+  try {
+    const res = await updateDriver(driverId, {
+      name: updatedDriver.name,
+      shift_hours: updatedDriver.shift_hours,
+      past_week_hours: updatedDriver.past_week_hours,
+    });
+    console.log(res.data.message);
+  } catch (err) {
+    console.error("Failed to update driver:", err);
+  }
+};
+  return(
+    <div className="Update-Driver-Page">
+      <h3>Update Details of Driver</h3>
+      <input className="id-update" type="text"
+        placeholder="Driver ID"
+        value={driverId}
+        onChange={(e) => setDriverId(e.target.value)}/>
+      <input
+        type="text"
+        placeholder="Name"
+        value={updatedDriver.name}
+        onChange={(e) =>
+          setUpdatedDriver({ ...updatedDriver, name: e.target.value })
+        }
+      />
+       <input
+        type="number"
+        placeholder="Shift Hours"
+        value={updatedDriver.shift_hours}
+        onChange={(e) =>
+          setUpdatedDriver({ ...updatedDriver, shift_hours: e.target.value })
+        }
+      />
+      <input
+        type="text"
+        placeholder="Past Week Hours (6|7|8|6|7|8|9)"
+        value={updatedDriver.past_week_hours}
+        onChange={(e) =>
+          setUpdatedDriver({
+            ...updatedDriver,
+            past_week_hours: e.target.value,
+          })
+        }
+      />
+      <button onClick={handleUpdateDriver}>Update</button>
+      
+
+    </div>
   );
+
 };
 
-const Drivers = () => {
-  const [active, setActive] = useState(null); // null | "view" | "add"
+//========================DELETE======================================
+const DeleteDrivers = () => {
+  const [driverId, setDriverId] = useState("");
 
-  return (
-    <div>
-      <button onClick={() => setActive("view")}>View</button>
-      <button onClick={() => setActive("add")}>Add Driver</button>
+  const handleDeleteDriver = async () => {
+    if (!driverId) {
+      alert("Please enter a Driver ID to delete.");
+      return;
+    }
 
-      {active === "view" && <ReadDrivers />}   {/* Render component */}
-      {active === "add" && <AddDrivers />}     {/* Render component */}
+    try {
+      const res = await deleteDriver(driverId);
+      console.log("Driver deleted:", res.data);
+      alert("Driver deleted successfully!");
+      setDriverId(""); // reset input
+    } catch (err) {
+      console.error("Failed to delete driver:", err);
+      alert("Error deleting driver.");
+    }};
+      return (
+    <div className="Delete-Driver-Page">
+      <h3>Remove Driver</h3>
+      <input
+        type="text"
+        placeholder="Driver ID"
+        value={driverId}
+        onChange={(e) => setDriverId(e.target.value)}
+      />
+      <button onClick={handleDeleteDriver}>Remove</button>
     </div>
   );
 };
-export default Drivers;
+const DriversManagement = () => {
+  const [active, setActive] = useState("menu"); // "menu" means buttons are visible
+
+  const renderContent = () => {
+    switch (active) {
+      case "view":
+        return <ReadDrivers />;
+      case "add":
+        return <AddDrivers />;
+      case "update":
+        return <UpdateDrivers />;
+      case "delete":
+        return <DeleteDrivers />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="DriversManagement">
+      <h2>Manage Drivers</h2>
+
+      {/* Show menu if active = menu */}
+      {active === "menu" && (
+        <div className="button-group">
+          <button onClick={() => setActive("view")}>View</button>
+          <button onClick={() => setActive("add")}>Add</button>
+          <button onClick={() => setActive("update")}>Update</button>
+          <button onClick={() => setActive("delete")}>Remove</button>
+        </div>
+      )}
+
+      {/* Show selected component with a Back button */}
+      {active !== "menu" && (
+        <div>
+          {renderContent()}
+          <button
+            style={{ marginTop: "1rem" }}
+            onClick={() => setActive("menu")}
+          >
+            ⬅ Back
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DriversManagement;

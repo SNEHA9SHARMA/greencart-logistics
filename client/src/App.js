@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-
+import "./App.css";
 import Login from "./Login";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
@@ -37,9 +37,10 @@ export default function App() {
 
   return (
     <>
+      <h1>Green Cart Logistics</h1>
       {/* Show navbar only after login */}
       <Navbar setToken={setToken} />
-
+      
       <Routes>
         {/* Redirect root to dashboard */}
         <Route path="/" element={<Navigate to="/dashboard" />} />
