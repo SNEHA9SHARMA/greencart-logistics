@@ -42,7 +42,7 @@ driversRouter.put("/:id",async(req,res)=>{
     const {id}=req.params;
     const {name,shift_hours,past_week_hours}=req.body;
     const result=await pool.query(
-      `UPDATE drivers SET name=$1, shift_hours=$2, week_hours=$3 WHERE id = $4 
+      `UPDATE drivers SET name=$1, shift_hours=$2, past_week_hours=$3 WHERE id = $4 
        RETURNING *`,
       [name, shift_hours, past_week_hours, id])
     if (result.rows.length === 0) {

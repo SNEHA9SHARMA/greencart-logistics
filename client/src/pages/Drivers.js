@@ -101,18 +101,17 @@ const UpdateDrivers=()=>{
   const [updatedDriver,setUpdatedDriver]=useState({
     name:"", shift_hours:"",past_week_hours:"",
   });
- const handleUpdateDriver = async () => {
-  try {
-    const res = await updateDriver(driverId, {
-      name: updatedDriver.name,
-      shift_hours: updatedDriver.shift_hours,
-      past_week_hours: updatedDriver.past_week_hours,
-    });
-    console.log(res.data.message);
-  } catch (err) {
-    console.error("Failed to update driver:", err);
+  const handleUpdateDriver=async ()=>{
+    try{
+       const res = await updateDriver(driverId, updatedDriver);
+       alert("Driver updated successfully!");
+       setDriverId("");
+       setUpdatedDriver({ name: "", shift_hours: "", past_week_hours: "" });
+    }catch (err) {
+      console.error("Failed to update driver:", err);
+      alert("Error updating driver");
+    }
   }
-};
   return(
     <div className="Update-Driver-Page">
       <h3>Update Details of Driver</h3>
