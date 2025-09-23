@@ -9,6 +9,7 @@ export const fetchRoutes = () => API.get("/routes");
 export const fetchOrders = () => API.get("/orders");
 export const fetchSimulation = () => API.get("/simulation");
 export const fetchInfo=()=>API.get("/info");
+export const addDriver = (driverData) => API.post("/drivers/add", driverData);
 export const runSimulation = () => API.post("/simulation/run");
 
 
